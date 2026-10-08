@@ -1,13 +1,16 @@
 #ifndef STACK_H
 #define STACK_H
-
+#include "vector.h"
 // Stack
 
 // Stores integer values inside
 // Change it to desired type
 typedef int Data;
 
-struct Stack;
+struct Stack
+{
+    Vector* vec;
+};
 
 // Creates empty stack
 Stack *stack_create();
@@ -28,5 +31,7 @@ void stack_pop(Stack *stack);
 
 // Returns true if the stack is empty
 bool stack_empty(const Stack *stack);
+
+void printStack(Stack* stack);
 
 #endif

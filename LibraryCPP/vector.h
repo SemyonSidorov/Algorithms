@@ -9,7 +9,12 @@
 // Change it to desired type
 typedef int Data;
 
-struct Vector;
+struct Vector
+{
+    int *Data;
+    size_t maxCapacity;
+    size_t currLength;
+};
 
 // Creates vector
 Vector *vector_create();
@@ -30,4 +35,5 @@ size_t vector_size(const Vector *vector);
 // Should be O(1) on average
 void vector_resize(Vector *vector, size_t size);
 
+void vector_push_back(Vector *vector, Data value);
 #endif
