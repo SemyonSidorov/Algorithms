@@ -224,15 +224,16 @@ int main(int argc, char *argv[]) {
     const char* scriptFile = argv[1];
     const char* inputFile = argv[2];
 
-    if (freopen(inputFile, "r", stdin) == nullptr) {
-        std::cerr << "Не удалось открыть файл с входными данными\n";
-        return 1;
-    }
-    std::ifstream script_file(scriptFile);
+    ifstream script_file(scriptFile);
     if (!script_file) {
-        std::cerr << "Не удалось открыть файл скрипта\n";
+        cerr << "Не удалось открыть файл скрипта\n";
         return 1;
     }
+    if (freopen(inputFile, "r", stdin) == nullptr) {
+        cerr << "Не удалось открыть файл с входными данными: " << inputFile << "\n";
+        return 1;
+    }
+
     Vector *programCode = vector_create();
     char ch;
     while (script_file.get(ch)) {

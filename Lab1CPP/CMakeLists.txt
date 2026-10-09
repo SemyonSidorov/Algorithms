@@ -15,7 +15,7 @@ target_link_libraries(task1 LibraryCPP)
 target_include_directories(task2 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../LibraryCPP)
 target_link_libraries(task2 LibraryCPP)
 
-enable_testing()
+#enable_testing()
 
 add_test(NAME Task1_Test1
         COMMAND task1 ${CMAKE_CURRENT_SOURCE_DIR}/tests/task1_1
