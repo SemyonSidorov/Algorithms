@@ -21,21 +21,25 @@ void stack_delete(Stack *stack)
 
 void stack_push(Stack *stack, Data data)
 {
-    vector_push_back(stack->vec, data);
+    size_t n = vector_size(stack->vec);
+    vector_resize(stack->vec, n + 1);
+    vector_set(stack->vec, n, data);
 }
 
 Data stack_get(const Stack *stack)
 {
-    if (!stack_empty(stack)) {
-        return vector_get(stack->vec, vector_size(stack->vec) - 1);
+    size_t n = vector_size(stack->vec);
+    if (n == 0) {
+        return 0;
     }
-    return (Data)0;
+    return vector_get(stack->vec, n - 1);
 }
 
 void stack_pop(Stack *stack)
 {
-    if (!stack_empty(stack)) {
-        stack->vec->currLength--;
+    size_t n = vector_size(stack->vec);
+    if (n > 0) {
+        vector_resize(stack->vec, n - 1);
     }
 }
 

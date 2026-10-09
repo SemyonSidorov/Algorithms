@@ -3,9 +3,9 @@
 Vector *vector_create()
 {
     Vector* vector = new Vector;
-    vector->Data = nullptr;
-    vector->maxCapacity = 0;
+    vector->maxCapacity = 4;
     vector->currLength = 0;
+    vector->Data = new Data[vector->maxCapacity];
     return vector;
 }
 
@@ -39,30 +39,19 @@ size_t vector_size(const Vector *vector)
 
 void vector_resize(Vector *vector, size_t size)
 {
-    int* temp = new int[size];
-    size_t oldCurrLength = vector->currLength;
+    if (size > vector->maxCapacity) {
+        size_t newCapacity = vector->maxCapacity * 2;
+        while (newCapacity < size) {
+            newCapacity *= 2;
+        };
 
-    for (size_t i = 0; i < oldCurrLength; i++) {
-        temp[i] = vector->Data[i];
-    }
-    if (vector->Data) {
+        Data* new_data = new Data[newCapacity];
+        for (size_t i = 0; i < vector->currLength; ++i) {
+            new_data[i] = vector->Data[i];
+        }
         delete[] vector->Data;
+        vector->Data = new_data;
+        vector->maxCapacity = newCapacity;
     }
-    vector->Data = temp;
-
-    vector->maxCapacity = size;
-
-    if (size < vector->currLength) {
-        vector->currLength = size;
-    }
-}
-void vector_push_back(Vector* vector, Data value) {
-    if (vector->maxCapacity == 0) {
-        vector_resize(vector, 4);
-    }
-    if (vector->currLength == vector->maxCapacity) {
-        vector_resize(vector, vector->maxCapacity * 2);
-    }
-    vector->Data[vector->currLength] = value;
-    vector->currLength++;
+    vector->currLength = size;
 }

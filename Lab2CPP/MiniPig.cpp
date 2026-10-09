@@ -236,7 +236,9 @@ int main(int argc, char *argv[]) {
     Vector *programCode = vector_create();
     char ch;
     while (script_file.get(ch)) {
-        vector_push_back(programCode, (int)ch);
+        size_t currentSize = vector_size(programCode);
+        vector_resize(programCode, currentSize + 1);
+        vector_set(programCode, currentSize, (int)ch);
     }
     script_file.close();
 
